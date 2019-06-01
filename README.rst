@@ -2,7 +2,7 @@ Two Windows Event Log Summarizers
 ---------------------------------
 
 SUMMARY:
-  - Two programs for summarizes the contents of a Windows Event Log:
+  - Two programs for summarizing the contents of a Windows Event Log:
     read_registry_direct.py, and read_xml_export.py.
   - https://github.com/DavidJLambert/Two-Windows-Event-Log-Summarizers
 
