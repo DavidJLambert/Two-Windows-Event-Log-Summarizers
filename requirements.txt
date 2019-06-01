@@ -1,0 +1,18 @@
+# requirements.txt
+# REPOSITORY:
+#   https://github.com/DavidJLambert/Two-Windows-Event-Log-Summarizers
+#
+# SUMMARY:
+#   Scans XML exports of the Windows Event Log and reports summary statistics.
+#
+# AUTHOR:
+#   David J. Lambert
+#
+# VERSION:
+#   0.1.0
+#
+# DATE:
+#   May 31, 2019
+
+frozendict
+PyWin32

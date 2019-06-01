@@ -1,0 +1,5 @@
+include README.rst
+include LICENSE.txt
+include requirements.txt
+include sample_data/ApplicationEventLog.xml.zip
+include sample_data/SystemEventLog.xml.zip
