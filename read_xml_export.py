@@ -9,10 +9,10 @@ AUTHOR:
   David J. Lambert
 
 VERSION:
-  0.1.0
+  0.1.1
 
 DATE:
-  May 31, 2019
+  July 10, 2020
 """
 
 # -------- IMPORTS.
@@ -28,7 +28,7 @@ import os
 # -------- CODE.
 
 
-def handle_files():
+def handle_files() -> None:
     """ Driver program.  Find XML files in current directory.
 
     Args:
@@ -38,7 +38,6 @@ def handle_files():
     Raises:
         none.
     """
-
     # Read and parse XML file(s).  First try to unzip any zipped files.
     xml_zip_files = glob.glob('./sample_data/*.xml.zip')
     if len(xml_zip_files) > 0:
@@ -66,9 +65,10 @@ def handle_files():
         if xml_file != last_xml_file:
             del events_root
             del tree
+# End of function handle_files.
 
 
-def analyze_one_file(events_root):
+def analyze_one_file(events_root) -> None:
     """ Main analysis.  Go thru one file, compile statistics on contents.
 
     Args:
@@ -78,7 +78,6 @@ def analyze_one_file(events_root):
     Raises:
         none.
     """
-
     # Get tag_root, the start of the tag for each node in this XML tree.
     tag_root = events_root[0].tag.replace("Event", "")
 
@@ -193,17 +192,18 @@ def analyze_one_file(events_root):
         print("\n##  {} occurrences of this event:".format(count))
         for key, value in event_summary.items():
             print(key + ": " + value)
+# End of function analyze_one_file.
 
 
-def find_field(child, field_name, tag_root):
+def find_field(child, field_name: str, tag_root: str) -> str:
     """ Fetch specific fields of the child nodes of current the XML node.
 
     Args:
         child (object): child of node that may have field = field_name.
-        field_name (string): name of field of XML node.
-        tag_root (string): start of tag of each XML node in tree.
+        field_name (str): name of field of XML node.
+        tag_root (str): start of tag of each XML node in tree.
     Returns:
-        text (string): text of the field with "field_name".
+        text (str): text of the field with "field_name".
     Raises:
         none.
     """
@@ -212,15 +212,16 @@ def find_field(child, field_name, tag_root):
         return ""
     else:
         return sanitize(field.text)
+# End of function find_field.
 
 
-def sanitize(this):
+def sanitize(this) -> str:
     """ Convert object to string.
 
     Args:
         this (object).
     Returns:
-        str(this).
+        str(this) (str)
     Raises:
         none.
     """
@@ -228,16 +229,17 @@ def sanitize(this):
         return "None"
     else:
         return str(this)
+# End of function sanitize.
 
 
-def get_user_name(sid):
+def get_user_name(sid) -> str:
     """ Translate from User SID to User Name.
 
     Args:
         PySID (object): contains a user's SID
         (See http://timgolden.me.uk/pywin32-docs/win32security.html).
     Returns:
-        username (string): Windows user name with argument's SID.
+        username (str): Windows user name with argument's SID.
     Raises:
         none.
     """
@@ -246,15 +248,16 @@ def get_user_name(sid):
     else:
         py_sid = win32security.GetBinarySid(sid)
         return win32security.LookupAccountSid(None, py_sid)[0]
+# End of function get_user_name.
 
 
-def level_name(level):
+def level_name(level: str) -> str:
     """ Translate 'Level' Event Log field from int to descriptive string.
 
     Args:
         level (str(int)): severity level of event.
     Returns:
-        severity (string).
+        severity (str).
     Raises:
         none.
     """
@@ -268,9 +271,10 @@ def level_name(level):
         return name[level]
     else:
         return sanitize(level)
+# End of function level_name.
 
 
-def opcode_name(opcode):
+def opcode_name(opcode: str) -> str:
     """ Translate 'Opcode' Event Log field from int to descriptive string.
 
     Args:
@@ -298,15 +302,16 @@ def opcode_name(opcode):
         return name[opcode]
     else:
         return sanitize(opcode)
+# End of function opcode_name.
 
 
-def keywords_name(keywords):
+def keywords_name(keywords: str) -> str:
     """ Translate 'Keywords' Event Log field from hex to descriptive string.
 
     Args:
-        keywords (hexidecimal string)).
+        keywords (str): hexidecimal string.
     Returns:
-        keywords_name (string): keyword(s) corresponding to hexidecimal arg.
+        keywords_name (str): keyword(s) corresponding to hexidecimal arg.
     Raises:
         none.
     """
@@ -332,13 +337,15 @@ def keywords_name(keywords):
         return name[keywords]
     else:
         return sanitize(keywords)
+# End of function keywords_name.
 
 
-def flatten(node, tag_root):
+def flatten(node, tag_root) -> None:
     """ Flattens subtree of a node.
 
     Args:
         node (object): XML tree subtree.
+        tag_root: ?
     Returns:
         none.
     Raises:
@@ -356,6 +363,7 @@ def flatten(node, tag_root):
         if len(child.attrib):
             for key, value in child.attrib.items():
                 print(tag + "-" + key.strip() + ": " + value.strip())
+# End of function flatten.
 
 
 if __name__ == '__main__':

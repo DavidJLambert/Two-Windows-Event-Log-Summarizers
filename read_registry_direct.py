@@ -9,10 +9,10 @@ AUTHOR:
   David J. Lambert
 
 VERSION:
-  0.1.0
+  0.1.1
 
 DATE:
-  May 31, 2019
+  July 10, 2020
 """
 
 # -------- IMPORTS.
@@ -30,7 +30,7 @@ import win32security
 # -------- CODE.
 
 
-def handle_logs():
+def handle_logs() -> None:
     """ Driver program.  Iterate through desired Windows Event Logs.
 
     Args:
@@ -49,9 +49,10 @@ def handle_logs():
         print("\n{}STARTING {} EVENT LOG.".format(pre_output, text))
         analyze_one_log(event_log)
         print("\n{}END OF {} EVENT LOG.".format(pre_output, text))
+# End of function handle_logs.
 
 
-def analyze_one_log(event_log):
+def analyze_one_log(event_log: str) -> None:
     """ Main analysis.  Go thru events in one event log, compile statistics.
 
     Args:
@@ -61,7 +62,6 @@ def analyze_one_log(event_log):
     Raises:
         none.
     """
-
     # Summary of one event.
     keys = ['EventID', 'Computer', 'Category', 'Source Name', 'Event Type',
             'User Name', 'Log Name']
@@ -105,15 +105,16 @@ def analyze_one_log(event_log):
         print("\n##  {} occurrences of this event:".format(count))
         for key, value in event_summary.items():
             print(str(key) + ": " + str(value))
+# End of function analyze_one_log.
 
 
-def type_name(event_type):
+def type_name(event_type: int) -> str:
     """ Translate Event Type field from int to descriptive string.
 
     Args:
         event_type (int): severity level of event.
     Returns:
-        severity (string).
+        severity (str).
     Raises:
         none.
     """
@@ -125,16 +126,17 @@ def type_name(event_type):
         return name[event_type]
     else:
         return sanitize(event_type)
+# End of function type_name.
 
 
-def get_user_name(py_sid):
+def get_user_name(py_sid) -> str:
     """ Translate from User SID to User Name.
 
     Args:
         PySID (object): contains a user's SID
         (See http://timgolden.me.uk/pywin32-docs/win32security.html).
     Returns:
-        username (string): Windows user name with argument's SID.
+        username (str): Windows user name with argument's SID.
     Raises:
         none.
     """
@@ -142,15 +144,16 @@ def get_user_name(py_sid):
         return "None"
     else:
         return win32security.LookupAccountSid(None, py_sid)[0]
+# End of function get_user_name.
 
 
-def sanitize(this):
+def sanitize(this) -> str:
     """ Convert object to string.
 
     Args:
         this (object).
     Returns:
-        str(this).
+        this (str): str(this)
     Raises:
         none.
     """
@@ -158,6 +161,7 @@ def sanitize(this):
         return "None"
     else:
         return str(this)
+# End of function sanitize.
 
 
 if __name__ == '__main__':
